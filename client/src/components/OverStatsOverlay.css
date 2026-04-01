@@ -1,0 +1,333 @@
+.oso-backdrop {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(5,10,20,0.97) 0%, rgba(0,12,6,0.97) 100%);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  animation: osoBgIn 0.4s ease-out both;
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: auto; /* ensure all clicks (including skip button) work */
+}
+
+@keyframes osoBgIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Subtle field lines in background */
+.oso-backdrop::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 59px,
+      rgba(0,208,132,0.04) 60px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 59px,
+      rgba(0,208,132,0.04) 60px
+    );
+  pointer-events: none;
+}
+
+.oso-container {
+  position: relative;
+  width: 100%;
+  max-width: 820px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: osoSlideIn 0.4s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+@keyframes osoSlideIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Header */
+.oso-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background: rgba(0,208,132,0.12);
+  border: 1px solid rgba(0,208,132,0.3);
+  border-radius: 8px;
+}
+
+.oso-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.oso-over-badge {
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: 2px;
+  color: var(--accent);
+}
+
+.oso-match-label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  font-family: var(--font-mono);
+  letter-spacing: 0.5px;
+}
+
+/* Countdown ring */
+.oso-timer {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.oso-timer-ring { width: 36px; height: 36px; transform: rotate(-90deg); }
+
+.oso-ring-bg {
+  fill: none;
+  stroke: rgba(255,255,255,0.08);
+  stroke-width: 3;
+}
+
+.oso-ring-fill {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.9s linear;
+}
+
+.oso-timer-num {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* Team blocks */
+.oso-two-teams {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.oso-team-block {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.oso-team-block.highlight {
+  border-color: rgba(0,208,132,0.3);
+  background: rgba(0,208,132,0.04);
+}
+
+.oso-team-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  background: rgba(0,0,0,0.35);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  flex-wrap: wrap;
+}
+
+.oso-flag { font-size: 15px; }
+.oso-team-name { font-size: 12px; font-weight: 700; color: #fff; flex: 1; white-space: nowrap; }
+.oso-team-score {
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--accent);
+  white-space: nowrap;
+}
+.oso-ov { font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.4); }
+.oso-rr { font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.45); }
+.oso-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.05);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+/* Table */
+.oso-table-wrap { padding: 4px 6px; }
+
+.oso-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.oso-table thead tr th {
+  padding: 3px 5px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.25);
+  text-align: left;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.oso-table thead tr th:not(:first-child) { text-align: center; }
+
+.oso-table tbody tr td {
+  padding: 4px 5px;
+  color: rgba(255,255,255,0.8);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  text-align: center;
+}
+.oso-table tbody tr td:first-child { text-align: left; }
+.oso-table tbody tr.on-strike td { color: #fff; background: rgba(0,208,132,0.07); }
+
+.oso-pname { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90px; }
+.oso-mono { font-family: var(--font-mono); font-size: 10px; }
+.oso-empty { color: rgba(255,255,255,0.25) !important; font-style: italic; padding: 6px 5px !important; }
+
+/* Bowler row */
+.oso-bowler-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  background: rgba(59,130,246,0.08);
+  border-top: 1px solid rgba(59,130,246,0.15);
+  flex-wrap: wrap;
+}
+.oso-b-label { font-size: 9px; font-weight: 700; letter-spacing: 1px; color: rgba(255,255,255,0.3); }
+.oso-b-name { font-size: 11px; font-weight: 600; color: #fff; flex: 1; }
+.oso-b-stat { font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.5); }
+
+/* This over balls */
+.oso-over-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  background: rgba(0,0,0,0.2);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  flex-wrap: wrap;
+}
+.oso-o-label { font-size: 9px; font-weight: 700; letter-spacing: 1px; color: rgba(255,255,255,0.3); margin-right: 2px; }
+.oso-ball {
+  width: 20px; height: 20px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: 9px; font-weight: 700;
+  background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7);
+}
+.oso-ball-wicket { background: rgba(255,77,77,0.4) !important; color: #ff9090 !important; }
+.oso-ball-boundary { background: rgba(245,158,11,0.4) !important; color: var(--gold) !important; }
+.oso-ball-extra { background: rgba(59,130,246,0.4) !important; color: #7cb9ff !important; }
+
+/* Target bar (2nd innings) */
+.oso-target-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.25);
+  border-radius: 8px;
+  flex-wrap: wrap;
+}
+.oso-tgt-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; color: rgba(255,255,255,0.35); }
+.oso-tgt-runs { font-family: var(--font-display); font-size: 22px; color: var(--gold); }
+.oso-tgt-sep { color: rgba(255,255,255,0.2); }
+.oso-tgt-need { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.7); }
+.oso-tgt-rrr { font-family: var(--font-mono); font-size: 11px; color: var(--gold); margin-left: auto; }
+
+/* Skip button */
+.oso-skip-btn {
+  align-self: flex-end;
+  padding: 5px 14px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.4);
+  cursor: pointer;
+  transition: all 0.18s;
+  letter-spacing: 0.5px;
+  margin-top: -2px;
+}
+.oso-skip-btn:hover { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.7); }
+
+/* Mobile */
+@media (max-width: 600px) {
+  .oso-two-teams { grid-template-columns: 1fr; }
+  .oso-team-score { font-size: 16px; }
+  .oso-over-badge { font-size: 14px; }
+}
+
+/* Footer with skip */
+.oso-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2px;
+}
+
+.oso-auto-label {
+  font-size: 10px;
+  color: rgba(255,255,255,0.3);
+  font-family: var(--font-mono);
+}
+
+/* Override skip button to be more prominent */
+.oso-skip-btn {
+  padding: 7px 20px !important;
+  background: rgba(255,255,255,0.1) !important;
+  border: 1px solid rgba(255,255,255,0.2) !important;
+  border-radius: 100px !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  color: rgba(255,255,255,0.7) !important;
+  cursor: pointer !important;
+  transition: all 0.18s !important;
+  letter-spacing: 0.5px !important;
+  align-self: unset !important;
+  margin-top: 0 !important;
+}
+
+.oso-skip-btn:hover {
+  background: rgba(255,255,255,0.18) !important;
+  color: #fff !important;
+  transform: none !important;
+}
+
+/* Sub-section labels inside team blocks */
+.oso-sub-label {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.3);
+  padding: 5px 10px 2px;
+  text-transform: uppercase;
+}
+
+/* Wicket highlight in bowling table */
+.oso-wicket-cell {
+  color: var(--red) !important;
+  font-weight: 800;
+}

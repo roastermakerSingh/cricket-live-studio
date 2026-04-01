@@ -1,0 +1,17 @@
+[build]
+  base    = "client"
+  command = "npm run build"
+  publish = "build"
+
+[build.environment]
+  CI = "false"
+  # REACT_APP_SERVER_URL is set in Netlify dashboard > Environment Variables
+  # Value: your Render server URL e.g. https://cricket-live-server.onrender.com
+
+[[redirects]]
+  from   = "/*"
+  to     = "/index.html"
+  status = 200
+
+[context.production.environment]
+  NODE_ENV = "production"
