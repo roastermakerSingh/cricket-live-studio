@@ -6,27 +6,32 @@ export default function ShareModal({ roomId, onClose }) {
   const [watchUrl, setWatchUrl] = useState('');
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     fetch(`/api/qr/watch/${roomId}`)
-      .then(r => r.json())
+      .then(r => {
+        if (!r.ok) throw new Error('Failed to fetch QR');
+        return r.json();
+      })
       .then(d => {
         setQrData(d.qrDataUrl);
-        setWatchUrl(d.watchUrl);
+        setWatchUrl(d.watchUrl); // Use the URL provided by server
         setLoading(false);
       })
-      .catch(() => {
-        // Fallback to current origin
-        const url = `${window.location.origin}/watch/${roomId}`;
-        setWatchUrl(url);
+      .catch(err => {
+        console.error('Error fetching watch link:', err);
+        setError('Could not generate watch link. Please try again.');
         setLoading(false);
       });
   }, [roomId]);
 
   const copy = () => {
-    navigator.clipboard?.writeText(watchUrl);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2500);
+    if (watchUrl) {
+      navigator.clipboard?.writeText(watchUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    }
   };
 
   return (
@@ -45,6 +50,8 @@ export default function ShareModal({ roomId, onClose }) {
 
           {loading ? (
             <div className="modal-loading"><div className="spinner" /></div>
+          ) : error ? (
+            <div className="error-message">{error}</div>
           ) : (
             <>
               {qrData && (
@@ -71,7 +78,7 @@ export default function ShareModal({ roomId, onClose }) {
               </div>
 
               <div className="modal-note">
-                ⚠️ This link works on your local network by default. To share with people outside your network, expose your server via a public IP or use a tunnel like <strong>ngrok</strong> (<code>ngrok http 3001</code>).
+                ⚠️ This link is configured for production and will work globally.
               </div>
             </>
           )}
