@@ -7,8 +7,10 @@ export default function MobileConnectModal({ roomId, onClose }) {
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
 
+  const serverUrl = process.env.REACT_APP_SERVER_URL || 'http://localhost:3001';
+
   useEffect(() => {
-    fetch(`/api/qr/mobile/${roomId}`)
+    fetch(`${serverUrl}/api/qr/mobile/${roomId}`)
       .then(r => r.json())
       .then(d => {
         setQrData(d.qrDataUrl);

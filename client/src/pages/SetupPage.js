@@ -80,7 +80,8 @@ export default function SetupPage() {
         maxOvers,
         startTime: new Date().toISOString(),
       };
-      const res = await fetch('/api/room', {
+      const serverUrl = process.env.REACT_APP_SERVER_URL || 'http://localhost:3001';
+      const res = await fetch(`${serverUrl}/api/room`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ matchConfig }),
